@@ -1,12 +1,164 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title> Rich Text editor </title>
+  <style>
+    div#TextEditor{
+      margin: 0 auto;
+      width: 750px;
+      height: 300px;
+    }
+    div#TheRibbon{
+      border-bottom: none;
+       padding: 10px ;
+       background-color:rgb(40,110,89);
+       color: white;
+       border-radius: 8px 8px 0px 0px;
+    }
+    div#RichTextArea{
+      border: 2px solid rgb(40, 110, 89);
+      height: 100%;
+      width: 746px;
+    }
+    iframe#TheWysiwyng{
+      height: 100%;
+      width: 100%;
+    }
+
+    div#TheRibbon button{
+       color:#fff;
+       border: none;
+       outline:none;
+       background-color: transparent;
+       cursor: pointer;
+    }
+
+    div#TheRibbon button:hover{
+      background-color: rgb(20,90,70);
+      transition: all 0.2s linear 0s;
+    }
+    div#TheRibbon input[type="color"]{
+       border: none;
+       outline: none;
+      background: transparent;
+    }
+
+  </style>
+  <script> 
+  
+  window.addEventListener("load", function(){
+    var editor = TheWysiwyng.document;
+    editor.designMode = "on";
+
+    BoldButton.addEventListener("click", function(){
+      editor.execCommand("Bold", false, null);
+    }, false);
+
+    ItalicButton.addEventListener("click", function(){
+      editor.execCommand("Italic" , false, null);
+    }, false);
+
+    SupButton.addEventListener("click", function(){
+      editor.execCommand("Superscript" , false, null);
+    }, false);
+
+    StrikeButton.addEventListener("click", function(){
+      editor.execCommand("Strikethrough" , false, null);
+    }, false);
+
+    OrderedListButton.addEventListener("click", function(){
+      editor.execCommand("InsertOrderedList" , false, "newOL" + Math.round(Math.random()* 1000) ); 
+    }, false);
+
+    UnorderedListButton.addEventListener("click", function(){
+      editor.execCommand("InsertUnorderedList" , false, "newOL" + Math.round(Math.random()* 1000) ); 
+    }, false);
+
+    fontColorButton.addEventListener("change", function(event){
+      editor.execCommand("ForeColor", false, event.target.value);
+    }, false);
+
+    highlightButton.addEventListener("change", function(event){
+      editor.execCommand("BackColor", false, event.target.value);
+    }, false);
+
+    fontChanger.addEventListener("change", function(event){
+       editor.execCommand("FontName", false, event.target.value);
+    },false);
+
+    fontSizeChanger.addEventListener("change", function(event){
+       editor.execCommand("FontSize", false, event.target.value);
+    },false);
+    
+    linkButton.addEventListener("click", function(){
+       var url = prompt("Enter a URL", "http://");
+       editor.execCommand("CreateLink", false, url);
+    }, false);
+
+    unLinkButton.addEventListener("click", function(){
+      editor.execCommand("UnLink", false, null);
+    },false);
+
+    undoButton.addEventListener("click", function(){
+      editor.execCommand("undo", false, null);
+    },false);
+
+    redoButton.addEventListener("click", function(){
+      editor.execCommand("redo", false, null);
+    },false);
+
+    },false);
+  
+  </script>
 </head>
 <body>
-  <h1>até que enfim</h1>
-  <strong>Highlande fera</strong>
+  <div id="TextEditor">
+    <div id="TheRibbon">
+      <button id="BoldButton" title="Bold"><b>B</b></button>
+      <button id="ItalicButton" title="Italic"><em>I</em></button>
+      <button id="SupButton" title="SuperScript">X<sup>2</sup></button>
+      <button id="StrikeButton" title="StrikeThrough"><s>abc</s></button>
+      <button id="OrderedListButton" title="Numbered List">(i)</button>
+      <button id="UnorderedListButton" title="Bulleted List">&bull;</button>
+      <input type="color" id="fontColorButton" title="Change Font Color"> 
+      <input type="color" id="highlightButton" title="Highlight Text">
+       <select  id="fontChanger">
+         <option value="Times New Roman">Times New Roman</option>
+         <option value="Consolas">Consolas</option>
+         <option value="Tahoma">Tahoma</option>
+         <option value="monoscape">Monoscape</option>
+         <option value="cursive">Cursive</option>
+         <option value="sans-serif">Sans-Serif</option>
+         <option value="Calibri">Calibri</option>
+      </select>
+      <select id="fontSizeChanger">
+        <script>
+          for(var i = 1; i < 10; i++){
+            document.write("<option value='"+i+"'> "+i+"</option>");
+          }
+        </script>
+      </select>
+      <button id="linkButton" title="Create Link">Link</button>
+      <button id="unLinkButton" title="Remove Link">Uulink</button>
+      <button id="undoButton" title="Undo The Previous action">&larr;</button>
+      <button id="redoButton" title="Redo">&rarr;</button>
+
+    </div>
+
+    <div id="RichTextArea">
+      <iframe name="TheWysiwyng" frameborder="0" id="TheWysiwyng"></iframe>
+    </div>
+  </div>
+
+  <script>
+    var fonts = document.querySelectorAll("select.fontChanger > option");
+
+    for(var i = 0; i < fonts.length; i++){
+
+       fonts[i].style.fontfamily = fonts[i].value
+    }
+  </script>
 </body>
 </html>
+
